@@ -29,10 +29,39 @@ app.get('/', (request, response) => {
 //     response.status(200).send('me pueden hackear aceptando todas las entradas en la ruta., :)')
 // })
 
-// app.post('/:data', (request, response) => {
-//     console.log('request.query', request.query);
-//     response.json(request.query);
-// });
+// Se puede colocar las variables deseadas ..//
+
+
+app.post('/:data', (request, response) => {
+    const variable = request.query; // Es un Json
+    var cont = 0;
+    var register = "{";
+    for (var key in variable) {
+        if (cont <= 1) {
+            register += key +':"'+ variable[key]+'",';  
+        }
+        cont ++;
+    }
+    register += "data:{"
+    cont2 = 0
+    for (var key in variable) {
+        if (cont2 > 1 && cont2 < cont - 1 ) {
+            register += key + ':"' + variable[key] + '",';  
+        }
+        else if(cont2 == cont-1){
+            register += key + ':"' + variable[key] + '"';  
+        }
+
+        cont2++;
+    }
+    register += '}}';
+    register_replace = register.replace(/\"/g,"'")
+    console.log(register_replace + "\n");
+    registerjson = JSON.stringify(register_replace);
+    console.log(registerjson + "\n");
+    response.json(register_replace);
+});
+
 
 routesV1(app);
 
