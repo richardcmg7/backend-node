@@ -69,6 +69,7 @@ const createUser = async (req,res) => {
 };
 const updateUser = async (req,res) => {
     try {
+        console.log('req sesion data', req.sessionData);
         const { username, email, data, userID } = req.body;       
         await Users.findOneAndUpdate(userID,{
             username, email,data
@@ -80,7 +81,7 @@ const updateUser = async (req,res) => {
             .status(500)
             .send(
                 { status: "VALORES DUPLICADOS",
-                 message: error.keyValue 
+                 message: e.keyValue 
                 });
             return
         }
